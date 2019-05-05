@@ -10,7 +10,9 @@ public class GuyLane extends Lane {
     }
 
     public void reset() {
+        turnOff(currentPosition);
         currentPosition = 0;
+        turnOn(0);
     }
 
     public int getPosition() {
@@ -48,6 +50,7 @@ public class GuyLane extends Lane {
     }
 
     public void hit() {
+        positionTable[currentPosition] = false;
         currentPosition = -1;
     }
 }

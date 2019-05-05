@@ -70,9 +70,6 @@ public class Controller {
     }
 
     public void update(float deltaTime) {
-        if(Gdx.input.justTouched())
-            guyLane.moveRight();
-
         if(getGuyPosition() == 6) {
             if (guyTimer.ticked(deltaTime)) {
                 guyLane.reset();
@@ -98,29 +95,19 @@ public class Controller {
 
         switch (getGuyPosition()) {
             case 1:
-                if(canLaneHurt(hammerLane))
-                    hitGuy();
-                hammerLane.turnOff(4);
+                handleCollision(hammerLane);
                 break;
             case 2:
-                if(canLaneHurt(bucketLane))
-                    hitGuy();
-                bucketLane.turnOff(4);
+                handleCollision(bucketLane);
                 break;
             case 3:
-                if(canLaneHurt(keyLane))
-                    hitGuy();
-                keyLane.turnOff(4);
+                handleCollision(keyLane);
                 break;
             case 4:
-                if(canLaneHurt(screwLane))
-                    hitGuy();
-                screwLane.turnOff(4);
+                handleCollision(screwLane);
                 break;
             case 5:
-                if(canLaneHurt(wrenchLane))
-                    hitGuy();
-                wrenchLane.turnOff(4);
+                handleCollision(wrenchLane);
                 break;
         }
 
@@ -129,7 +116,7 @@ public class Controller {
             if(guyTimer.ticked(deltaTime)) {
                 guyLane.reset();
 
-                guyTimer.setTimer(1.f);
+                guyTimer.setTimer(0.5f);
                 guyTimer.reset();
 
                 hammerLane.resume();
@@ -148,6 +135,12 @@ public class Controller {
                 door.pause();
             }
         }
+    }
+
+    private void handleCollision(ObstacleLane lane) {
+        if(canLaneHurt(lane))
+            hitGuy();
+        lane.turnOff(4);
     }
 
     private boolean canLaneHurt(ObstacleLane lane) {
@@ -205,6 +198,10 @@ public class Controller {
 
     public int getGuyPosition() {
         return guyLane.getPosition();
+    }
+
+    public Lane getGuyLane() {
+        return guyLane;
     }
 
     public boolean isRightDoorOpen() {

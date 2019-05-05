@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -78,6 +79,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		atlas.addTexture("missText", "GUI/MissTextSpr.png");
 		atlas.addTexture("miss", "GUI/MissSpr.png");
 
+		atlas.addTexture("balcony", "Scenery/Balcony.png");
+		atlas.addTexture("trees", "Scenery/Trees.png");
+		atlas.addTexture("roof", "Scenery/ShedRoof.png");
+
 		displayPainter = new DisplayPainter();
 		displayPainter.setSpriteBatch(batch);
 		displayPainter.setTextureAtlas(atlas);
@@ -141,8 +146,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		draw("miss", 1131, 77);
 		*/
 
-		controller.update(Gdx.graphics.getDeltaTime());
-		displayPainter.draw();
+		if(Gdx.input.justTouched()) {
+			if (Gdx.input.getX() < viewport.getScreenWidth() / 2)
+				controller.moveGuyLeft();
+
+			if (Gdx.input.getX() > viewport.getScreenWidth() / 2)
+				controller.moveGuyRight();
+		}
+
+		float dt = Gdx.graphics.getDeltaTime();
+
+		controller.update(dt);
+		displayPainter.draw(dt);
 	}
 	
 	@Override
