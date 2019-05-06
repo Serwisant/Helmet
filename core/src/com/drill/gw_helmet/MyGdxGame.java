@@ -82,6 +82,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		atlas.addTexture("balcony", "Scenery/Balcony.png");
 		atlas.addTexture("trees", "Scenery/Trees.png");
 		atlas.addTexture("roof", "Scenery/ShedRoof.png");
+		atlas.addTexture("ground", "Scenery/Ground.png");
 
 		displayPainter = new DisplayPainter();
 		displayPainter.setSpriteBatch(batch);

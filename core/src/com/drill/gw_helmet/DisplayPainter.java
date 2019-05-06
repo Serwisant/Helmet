@@ -22,6 +22,8 @@ public class DisplayPainter {
     private Vector<DisplayFragment> screwFragments;
     private Vector<DisplayFragment> wrenchFragments;
 
+    private Vector<DisplayFragment> missFragments;
+
     public DisplayPainter() {
         guyFragments = new Vector<DisplayFragment>();
 
@@ -30,13 +32,15 @@ public class DisplayPainter {
         keyFragments = new Vector<DisplayFragment>();
         screwFragments = new Vector<DisplayFragment>();
         wrenchFragments = new Vector<DisplayFragment>();
+
+        missFragments = new Vector<DisplayFragment>();
     }
 
     public void setTextureAtlas(TextureAtlas textureAtlas) {
         atlas = textureAtlas;
 
         fallenGuy = new DisplayFragment();
-        fallenGuy.setLocation(707, 882);
+        fallenGuy.setLocation(707, 908);
         fallenGuy.setTexture(atlas.getTexture("fallenGuy"));
 
         DisplayFragment guy1 = new DisplayFragment();
@@ -202,6 +206,27 @@ public class DisplayPainter {
         wrench5.setLocation(1168, 622);
         wrench5.setTexture(atlas.getTexture("wrench5"));
         wrenchFragments.add(wrench5);
+
+
+        DisplayFragment miss1 = new DisplayFragment();
+        miss1.setLocation(967, 78);
+        missFragments.add(miss1);
+
+        DisplayFragment miss2 = new DisplayFragment();
+        miss2.setLocation(1066, 78);
+        missFragments.add(miss2);
+
+        DisplayFragment miss3 = new DisplayFragment();
+        miss3.setLocation(1167, 78);
+        missFragments.add(miss3);
+
+        for(DisplayFragment i : missFragments)
+            i.setTexture(atlas.getTexture("miss"));
+
+        DisplayFragment missText = new DisplayFragment();
+        missText.setLocation(1018, 196);
+        missText.setTexture(atlas.getTexture("missText"));
+        missFragments.add(missText);
     }
 
     public void setSpriteBatch(SpriteBatch spriteBatch) {
@@ -220,6 +245,7 @@ public class DisplayPainter {
         drawLanes();
         drawHelmetGuy();
         drawDoor();
+        drawMisses();
 
         batch.end();
     }
@@ -228,6 +254,7 @@ public class DisplayPainter {
         draw("balcony", 44, 230);
         draw("trees", 1339, 287);
         draw("roof", 1334, 519);
+        draw("ground", 214, 905);
     }
 
     private void drawLanes() {
@@ -264,6 +291,43 @@ public class DisplayPainter {
         else
             fallenGuy.turnOff();
         fallenGuy.draw(batch);
+    }
+
+    private void drawMisses() {
+        for(DisplayFragment i : missFragments)
+            i.update(dt);
+
+        if(controller.getMisses() > 0)
+            missFragments.elementAt(3).turnOn();
+        else
+            missFragments.elementAt(3).turnOff();
+
+        switch(controller.getMisses()) {
+            case 0:
+                missFragments.elementAt(0).turnOff();
+                missFragments.elementAt(1).turnOff();
+                missFragments.elementAt(2).turnOff();
+                break;
+            case 1:
+                missFragments.elementAt(0).turnOn();
+                missFragments.elementAt(1).turnOff();
+                missFragments.elementAt(2).turnOff();
+                break;
+            case 2:
+                missFragments.elementAt(0).turnOn();
+                missFragments.elementAt(1).turnOn();
+                missFragments.elementAt(2).turnOff();
+                break;
+            case 3:
+                missFragments.elementAt(0).turnOn();
+                missFragments.elementAt(1).turnOn();
+                missFragments.elementAt(2).turnOn();
+                break;
+        }
+
+
+        for(DisplayFragment i : missFragments)
+            i.draw(batch);
     }
 
     private void updateAndDisplayLaneFragment(Vector<DisplayFragment> lane, boolean[] positionTable) {

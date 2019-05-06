@@ -7,7 +7,7 @@ import com.badlogic.gdx.InputProcessor;
 public class Controller {
     private static float LANE_TIMER = 1.f;
 
-    private int misses;
+
     private ObstacleLane hammerLane;
     private ObstacleLane bucketLane;
     private ObstacleLane keyLane;
@@ -18,7 +18,9 @@ public class Controller {
 
     private GuyLane guyLane;
     private Timer guyTimer;
+
     private int score;
+    private int misses;
 
     private Timer toolTimer;
 
@@ -54,6 +56,7 @@ public class Controller {
         prepareLane(wrenchLane, 0.8f);
 
         score = 0;
+        misses = 0;
     }
 
     private void prepareLane(ObstacleLane lane, float delay) {
@@ -114,6 +117,9 @@ public class Controller {
         if(guyLane.getPosition() == -1)
         {
             if(guyTimer.ticked(deltaTime)) {
+                if(misses >= 4)
+                    reset();
+
                 guyLane.reset();
 
                 guyTimer.setTimer(0.5f);
@@ -150,6 +156,7 @@ public class Controller {
     private void hitGuy() {
         guyLane.hit();
         guyTimer.setTimer(1.f);
+        misses++;
     }
 
     private void generateNewTool() {
@@ -206,5 +213,9 @@ public class Controller {
 
     public boolean isRightDoorOpen() {
         return door.isOpen();
+    }
+
+    public int getMisses() {
+        return misses;
     }
 }
