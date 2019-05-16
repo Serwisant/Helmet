@@ -1,12 +1,11 @@
 package com.drill.gw_helmet;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
+import java.util.Vector;
 
 public class Controller {
     private static float LANE_TIMER = 1.f;
 
+    private Vector<ObstacleLane> obstacleContainer;
 
     private ObstacleLane hammerLane;
     private ObstacleLane bucketLane;
@@ -20,9 +19,12 @@ public class Controller {
     private Timer guyTimer;
 
     private int score;
+    private int partialScore;
     private int misses;
 
     private Timer toolTimer;
+
+    private float deltaTime;
 
     public Controller() {
         reset();
@@ -31,11 +33,19 @@ public class Controller {
     public void reset() {
         misses = 0;
 
+        obstacleContainer = new Vector<ObstacleLane>();
+
         hammerLane = new ObstacleLane();
         bucketLane = new ObstacleLane();
         keyLane = new ObstacleLane();
         screwLane = new ObstacleLane();
         wrenchLane = new ObstacleLane();
+
+        obstacleContainer.add(hammerLane);
+        obstacleContainer.add(bucketLane);
+        obstacleContainer.add(keyLane);
+        obstacleContainer.add(screwLane);
+        obstacleContainer.add(wrenchLane);
 
         door = new Door();
 
@@ -56,7 +66,9 @@ public class Controller {
         prepareLane(wrenchLane, 0.8f);
 
         score = 0;
+        partialScore = 0;
         misses = 0;
+        deltaTime = 0;
     }
 
     private void prepareLane(ObstacleLane lane, float delay) {
@@ -73,49 +85,87 @@ public class Controller {
     }
 
     public void update(float deltaTime) {
+        this.deltaTime = deltaTime;
+
+        checkAndHandleDoor();
+        updateObstacles();
+        countScore();
+        increaseSpeedIfNeeded();
+        handleCollision();
+        checkForToolGenerator();
+        updateDoor();
+        handleFallenGuy();
+    }
+
+    private void checkAndHandleDoor() {
         if(getGuyPosition() == 6) {
             if (guyTimer.ticked(deltaTime)) {
                 guyLane.reset();
                 door.resume();
                 guyTimer.reset();
+                score += 5;
             }
             else
                 door.pause();
         }
+    }
 
-        hammerLane.update(deltaTime);
-        bucketLane.update(deltaTime);
-        keyLane.update(deltaTime);
-        screwLane.update(deltaTime);
-        wrenchLane.update(deltaTime);
+    private void updateObstacles() {
+        for(ObstacleLane i : obstacleContainer)
+            i.update(deltaTime);
+    }
 
+    private void countScore() {
+        for(ObstacleLane i : obstacleContainer)
+            if(i.didObstacleJustFall())
+                partialScore++;
+
+        int scoreToAdd = partialScore/3;
+        partialScore = partialScore % 3;
+        score += scoreToAdd;
+
+        if(score >= 999)
+            score = 999;
+    }
+
+    private void increaseSpeedIfNeeded() {
+        float speed;
+
+        if(score >= 500)
+            speed = 0.3f;
+        else if(score >= 200)
+            speed = 0.7f;
+        else if(score >= 50)
+            speed = 0.9f;
+        else
+            speed = 1.f;
+
+        for(ObstacleLane i : obstacleContainer)
+            i.setTimerWithoutReset(speed);
+    }
+
+    private void handleCollision() {
+        if(getGuyPosition() > 0 && getGuyPosition() < 6) {
+            ObstacleLane laneOverGuy = obstacleContainer.get(getGuyPosition() - 1);
+
+            if (canLaneHurt(laneOverGuy)) {
+                hitGuy();
+                laneOverGuy.turnOff(4);
+            }
+        }
+    }
+
+    private void checkForToolGenerator() {
         if(toolTimer.ticked(deltaTime))
-        {
             generateNewTool();
-        }
+    }
 
+    private void updateDoor() {
         door.update(deltaTime);
+    }
 
-        switch (getGuyPosition()) {
-            case 1:
-                handleCollision(hammerLane);
-                break;
-            case 2:
-                handleCollision(bucketLane);
-                break;
-            case 3:
-                handleCollision(keyLane);
-                break;
-            case 4:
-                handleCollision(screwLane);
-                break;
-            case 5:
-                handleCollision(wrenchLane);
-                break;
-        }
-
-        if(guyLane.getPosition() == -1)
-        {
+    private void handleFallenGuy() {
+        if(guyLane.getPosition() == -1) {
             if(guyTimer.ticked(deltaTime)) {
                 if(misses >= 4)
                     reset();
@@ -125,28 +175,15 @@ public class Controller {
                 guyTimer.setTimer(0.5f);
                 guyTimer.reset();
 
-                hammerLane.resume();
-                bucketLane.resume();
-                keyLane.resume();
-                screwLane.resume();
-                wrenchLane.resume();
+                for(ObstacleLane i : obstacleContainer)
+                    i.resume();
 
                 door.resume();
             } else {
-                hammerLane.pause();
-                bucketLane.pause();
-                keyLane.pause();
-                screwLane.pause();
-                wrenchLane.pause();
-                door.pause();
+                for(ObstacleLane i : obstacleContainer)
+                    i.pause();
             }
         }
-    }
-
-    private void handleCollision(ObstacleLane lane) {
-        if(canLaneHurt(lane))
-            hitGuy();
-        lane.turnOff(4);
     }
 
     private boolean canLaneHurt(ObstacleLane lane) {
@@ -160,25 +197,12 @@ public class Controller {
     }
 
     private void generateNewTool() {
-        switch ((int)(Math.random() * 10) % 6) {
-            case 0:
-                hammerLane.add();
-                break;
-            case 1:
-                bucketLane.add();
-                break;
-            case 2:
-                keyLane.add();
-                break;
-            case 3:
-                screwLane.add();
-                break;
-            case 4:
-                wrenchLane.add();
-                break;
-            default:
-                break;
-        }
+        int addToLane = (int)(Math.random() * 10) % obstacleContainer.size() + 1;
+
+        if(addToLane >= obstacleContainer.size())
+            return;
+
+        obstacleContainer.elementAt(addToLane).add();
 
         toolTimer.reset();
     }
@@ -217,5 +241,9 @@ public class Controller {
 
     public int getMisses() {
         return misses;
+    }
+
+    public int getPoints() {
+        return score;
     }
 }

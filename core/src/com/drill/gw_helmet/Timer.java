@@ -21,6 +21,10 @@ public class Timer {
         reset();
     }
 
+    public void changeTimerWithoutReset(float timer) {
+        resetValue = timer;
+    }
+
     public boolean ticked(float deltaTime) {
         if(paused == true)
             return false;

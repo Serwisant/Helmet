@@ -84,6 +84,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		atlas.addTexture("roof", "Scenery/ShedRoof.png");
 		atlas.addTexture("ground", "Scenery/Ground.png");
 
+		atlas.addTexture("digit0", "GUI/Digits/0.png");
+		atlas.addTexture("digit1", "GUI/Digits/1.png");
+		atlas.addTexture("digit2", "GUI/Digits/2.png");
+		atlas.addTexture("digit3", "GUI/Digits/3.png");
+		atlas.addTexture("digit4", "GUI/Digits/4.png");
+		atlas.addTexture("digit5", "GUI/Digits/5.png");
+		atlas.addTexture("digit6", "GUI/Digits/6.png");
+		atlas.addTexture("digit7", "GUI/Digits/7.png");
+		atlas.addTexture("digit8", "GUI/Digits/Counter.png");
+		atlas.addTexture("digit9", "GUI/Digits/9.png");
+
 		displayPainter = new DisplayPainter();
 		displayPainter.setSpriteBatch(batch);
 		displayPainter.setTextureAtlas(atlas);
@@ -92,8 +103,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		//Gdx.gl.glClearColor(168.f/255.f, 198.f/255.f, 78.f/255.f, 1);
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+		Gdx.gl.glClearColor(168.f/255.f, 198.f/255.f, 78.f/255.f, 1);
+        //Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.setProjectionMatrix(camera.combined);
 		/*

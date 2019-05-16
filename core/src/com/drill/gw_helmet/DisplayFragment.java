@@ -62,6 +62,9 @@ public class DisplayFragment {
     }
 
     public void draw(SpriteBatch batch) {
+        if(texture == null)
+            return;
+
         Sprite sprite = new Sprite(texture);
         sprite.setAlpha(alpha);
         sprite.setPosition(x, 1080 - texture.getHeight() - y);
