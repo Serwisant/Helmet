@@ -158,7 +158,7 @@ public class DisplayPainter {
     private void drawDoor() {
         draw("Scenery/LeftDoor", 46, 616);
 
-        if(controller.isRightDoorOpen())
+        if(controller.isRightDoorOpen())    // TODO: Alpha
             draw("Door/RightDoorOpen", 1470, 587);
         else
             draw("Door/RightDoorClosed", 1310, 658);

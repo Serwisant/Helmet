@@ -116,6 +116,9 @@ public class Controller {
     }
 
     private void countScore() {
+        if(guyLane.getPosition() == 0)
+            return;
+        
         for(ObstacleLane i : obstacleContainer)
             if(i.didObstacleJustFall())
                 partialScore++;
