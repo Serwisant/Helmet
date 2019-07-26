@@ -1,0 +1,363 @@
+
+Assets.png
+size: 2048,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Bucket/Bucket1
+  rotate: false
+  xy: 293, 58
+  size: 105, 97
+  orig: 105, 97
+  offset: 0, 0
+  index: -1
+Bucket/Bucket2
+  rotate: false
+  xy: 1897, 941
+  size: 111, 81
+  orig: 111, 81
+  offset: 0, 0
+  index: -1
+Bucket/Bucket3
+  rotate: false
+  xy: 1782, 804
+  size: 109, 74
+  orig: 109, 74
+  offset: 0, 0
+  index: -1
+Bucket/Bucket4
+  rotate: false
+  xy: 1893, 781
+  size: 109, 81
+  orig: 109, 81
+  offset: 0, 0
+  index: -1
+Bucket/Bucket5
+  rotate: false
+  xy: 1782, 880
+  size: 109, 90
+  orig: 109, 90
+  offset: 0, 0
+  index: -1
+Door/RightDoorClosed
+  rotate: false
+  xy: 512, 10
+  size: 90, 104
+  orig: 90, 104
+  offset: 0, 0
+  index: -1
+Door/RightDoorOpen
+  rotate: false
+  xy: 194, 76
+  size: 97, 312
+  orig: 97, 312
+  offset: 0, 0
+  index: -1
+GUI/Digit0
+  rotate: false
+  xy: 1093, 749
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit1
+  rotate: false
+  xy: 1268, 740
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit2
+  rotate: false
+  xy: 1355, 847
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit3
+  rotate: false
+  xy: 1355, 708
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit4
+  rotate: false
+  xy: 1442, 845
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit5
+  rotate: false
+  xy: 1529, 845
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit6
+  rotate: false
+  xy: 1442, 706
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit7
+  rotate: false
+  xy: 1529, 706
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit8
+  rotate: false
+  xy: 1616, 827
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/Digit9
+  rotate: false
+  xy: 1006, 729
+  size: 85, 137
+  orig: 85, 137
+  offset: 0, 0
+  index: -1
+GUI/MissIcon
+  rotate: false
+  xy: 1106, 662
+  size: 63, 85
+  orig: 63, 85
+  offset: 0, 0
+  index: -1
+GUI/MissText
+  rotate: false
+  xy: 1355, 986
+  size: 151, 36
+  orig: 151, 36
+  offset: 0, 0
+  index: -1
+Hammer/Hammer1
+  rotate: false
+  xy: 1221, 954
+  size: 132, 68
+  orig: 132, 68
+  offset: 0, 0
+  index: -1
+Hammer/Hammer2
+  rotate: false
+  xy: 1082, 888
+  size: 129, 74
+  orig: 129, 74
+  offset: 0, 0
+  index: -1
+Hammer/Hammer3
+  rotate: false
+  xy: 959, 868
+  size: 121, 91
+  orig: 121, 91
+  offset: 0, 0
+  index: -1
+Hammer/Hammer4
+  rotate: false
+  xy: 400, 2
+  size: 110, 112
+  orig: 110, 112
+  offset: 0, 0
+  index: -1
+Hammer/Hammer5
+  rotate: false
+  xy: 1180, 747
+  size: 86, 130
+  orig: 86, 130
+  offset: 0, 0
+  index: -1
+HelmetGuy/FallenGuy
+  rotate: false
+  xy: 378, 838
+  size: 308, 121
+  orig: 308, 121
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy1
+  rotate: false
+  xy: 689, 678
+  size: 111, 185
+  orig: 111, 185
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy2
+  rotate: false
+  xy: 538, 658
+  size: 149, 178
+  orig: 149, 178
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy3
+  rotate: false
+  xy: 378, 655
+  size: 158, 181
+  orig: 158, 181
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy4
+  rotate: false
+  xy: 400, 285
+  size: 141, 184
+  orig: 141, 184
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy5
+  rotate: false
+  xy: 378, 471
+  size: 156, 182
+  orig: 156, 182
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy6
+  rotate: false
+  xy: 400, 116
+  size: 170, 167
+  orig: 170, 167
+  offset: 0, 0
+  index: -1
+HelmetGuy/HelmetGuy7
+  rotate: false
+  xy: 802, 718
+  size: 96, 145
+  orig: 96, 145
+  offset: 0, 0
+  index: -1
+Key/Key1
+  rotate: false
+  xy: 1893, 864
+  size: 111, 75
+  orig: 111, 75
+  offset: 0, 0
+  index: -1
+Key/Key2
+  rotate: false
+  xy: 1778, 972
+  size: 117, 50
+  orig: 117, 50
+  offset: 0, 0
+  index: -1
+Key/Key3
+  rotate: false
+  xy: 1658, 966
+  size: 118, 56
+  orig: 118, 56
+  offset: 0, 0
+  index: -1
+Key/Key4
+  rotate: false
+  xy: 1213, 879
+  size: 114, 73
+  orig: 114, 73
+  offset: 0, 0
+  index: -1
+Key/Key5
+  rotate: false
+  xy: 1616, 727
+  size: 96, 98
+  orig: 96, 98
+  offset: 0, 0
+  index: -1
+Scenery/Balcony
+  rotate: false
+  xy: 2, 30
+  size: 190, 358
+  orig: 190, 358
+  offset: 0, 0
+  index: -1
+Scenery/Ground
+  rotate: false
+  xy: 2, 961
+  size: 1072, 61
+  orig: 1072, 61
+  offset: 0, 0
+  index: -1
+Scenery/LeftDoor
+  rotate: false
+  xy: 293, 157
+  size: 105, 231
+  orig: 105, 231
+  offset: 0, 0
+  index: -1
+Scenery/WorkshopAndTrees
+  rotate: false
+  xy: 2, 390
+  size: 374, 569
+  orig: 374, 569
+  offset: 0, 0
+  index: -1
+Screw/Screw1
+  rotate: false
+  xy: 819, 877
+  size: 138, 82
+  orig: 138, 82
+  offset: 0, 0
+  index: -1
+Screw/Screw2
+  rotate: false
+  xy: 1508, 984
+  size: 148, 38
+  orig: 148, 38
+  offset: 0, 0
+  index: -1
+Screw/Screw3
+  rotate: false
+  xy: 1076, 964
+  size: 143, 58
+  orig: 143, 58
+  offset: 0, 0
+  index: -1
+Screw/Screw4
+  rotate: false
+  xy: 688, 865
+  size: 129, 94
+  orig: 129, 94
+  offset: 0, 0
+  index: -1
+Screw/Screw5
+  rotate: false
+  xy: 900, 743
+  size: 104, 123
+  orig: 104, 123
+  offset: 0, 0
+  index: -1
+Wrench/Wrench1
+  rotate: false
+  xy: 1006, 649
+  size: 98, 78
+  orig: 98, 78
+  offset: 0, 0
+  index: -1
+Wrench/Wrench2
+  rotate: false
+  xy: 1703, 862
+  size: 77, 102
+  orig: 77, 102
+  offset: 0, 0
+  index: -1
+Wrench/Wrench3
+  rotate: false
+  xy: 900, 667
+  size: 104, 74
+  orig: 104, 74
+  offset: 0, 0
+  index: -1
+Wrench/Wrench4
+  rotate: false
+  xy: 689, 606
+  size: 100, 70
+  orig: 100, 70
+  offset: 0, 0
+  index: -1
+Wrench/Wrench5
+  rotate: false
+  xy: 1616, 642
+  size: 98, 83
+  orig: 98, 83
+  offset: 0, 0
+  index: -1

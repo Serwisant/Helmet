@@ -147,8 +147,8 @@ public class Controller {
     private void handleCollision() {
         if(getGuyPosition() > 0 && getGuyPosition() < 6) {
             ObstacleLane laneOverGuy = obstacleContainer.get(getGuyPosition() - 1);
-
             if (canLaneHurt(laneOverGuy)) {
+
                 hitGuy();
                 laneOverGuy.turnOff(4);
             }

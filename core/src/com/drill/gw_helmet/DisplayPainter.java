@@ -1,13 +1,13 @@
 package com.drill.gw_helmet;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Array;
 
 import java.util.Vector;
 
 public class DisplayPainter {
-    private TextureAtlas atlas;
+    private TextureAtlasWrapper atlas;
     private SpriteBatch batch;
     private Controller controller;
     private float dt;
@@ -18,10 +18,10 @@ public class DisplayPainter {
         dfc = new DisplayFragmentContainer();
     }
 
-    public void setTextureAtlas(TextureAtlas textureAtlas) {
-        atlas = textureAtlas;
+    public void setTextureAtlas(TextureAtlasWrapper textureAtlasWrapper) {
+        atlas = textureAtlasWrapper;
 
-        dfc.setTextureAtlas(textureAtlas);
+        dfc.setSpriteAtlas(textureAtlasWrapper);
         dfc.fillContainers();
     }
 
@@ -47,20 +47,19 @@ public class DisplayPainter {
     }
 
     private void drawScenery() {
-        draw("balcony", 44, 230);
-        draw("trees", 1339, 287);
-        draw("roof", 1334, 519);
-        draw("ground", 214, 905);
+        draw("Scenery/Balcony", 0, 240);
+        draw("Scenery/WorkshopAndTrees", 1248, 290);
+        draw("Scenery/Ground", 180, 843);
     }
 
     private void drawLanes() {
-        updateAndDisplayLaneFragment(dfc.getGuyFragments(), controller.getGuyLane().positionTable);
+        updateAndDisplayLaneFragment(dfc.getGuyFragments(), controller.getGuyLane().getPositionTable());
 
-        updateAndDisplayLaneFragment(dfc.getHammerFragments(), controller.getHammerLane().positionTable);
-        updateAndDisplayLaneFragment(dfc.getBucketFragments(), controller.getBucketLane().positionTable);
-        updateAndDisplayLaneFragment(dfc.getKeyFragments(), controller.getKeyLane().positionTable);
-        updateAndDisplayLaneFragment(dfc.getScrewFragments(), controller.getScrewLane().positionTable);
-        updateAndDisplayLaneFragment(dfc.getWrenchFragments(), controller.getWrenchLane().positionTable);
+        updateAndDisplayLaneFragment(dfc.getHammerFragments(), controller.getHammerLane().getPositionTable());
+        updateAndDisplayLaneFragment(dfc.getBucketFragments(), controller.getBucketLane().getPositionTable());
+        updateAndDisplayLaneFragment(dfc.getKeyFragments(), controller.getKeyLane().getPositionTable());
+        updateAndDisplayLaneFragment(dfc.getScrewFragments(), controller.getScrewLane().getPositionTable());
+        updateAndDisplayLaneFragment(dfc.getWrenchFragments(), controller.getWrenchLane().getPositionTable());
 
         dfc.getFallenGuyFragment().update(dt);
         if(controller.getGuyPosition() == -1)
@@ -123,9 +122,9 @@ public class DisplayPainter {
         } else {
             dfc.getPointDigitsFragments().elementAt(0).turnOn();
 
-            String digitTexture = "digit";
+            String digitTexture = "GUI/Digit";
             digitTexture += Integer.toString(controller.getPoints() / 100);
-            dfc.getPointDigitsFragments().elementAt(0).setTexture(atlas.getTexture(digitTexture));
+            dfc.getPointDigitsFragments().elementAt(0).setSprite(atlas.getSprite(digitTexture));
         }
 
         if(controller.getPoints() < 10) {
@@ -133,16 +132,16 @@ public class DisplayPainter {
         } else {
             dfc.getPointDigitsFragments().elementAt(1).turnOn();
 
-            String digitTexture = "digit";
+            String digitTexture = "GUI/Digit";
             digitTexture += Integer.toString(controller.getPoints() / 10 % 10);
-            dfc.getPointDigitsFragments().elementAt(1).setTexture(atlas.getTexture(digitTexture));
+            dfc.getPointDigitsFragments().elementAt(1).setSprite(atlas.getSprite(digitTexture));
         }
 
         dfc.getPointDigitsFragments().elementAt(2).turnOn();
 
-        String digitTexture = "digit";
+        String digitTexture = "GUI/Digit";
         digitTexture += Integer.toString(controller.getPoints() % 10);
-        dfc.getPointDigitsFragments().elementAt(2).setTexture(atlas.getTexture(digitTexture));
+        dfc.getPointDigitsFragments().elementAt(2).setSprite(atlas.getSprite(digitTexture));
     }
 
     private void updateAndDisplayLaneFragment(Vector<DisplayFragment> lane, boolean[] positionTable) {
@@ -150,28 +149,29 @@ public class DisplayPainter {
             i.update(dt);
         }
 
-        checkLightning(lane, positionTable);
+        updateLightning(lane, positionTable);
 
         for(DisplayFragment i : lane)
             i.draw(batch);
     }
 
     private void drawDoor() {
-        draw("leftDoor", 85, 647);
-        draw("rightDoorFrame", 1355, 647);
+        draw("Scenery/LeftDoor", 46, 616);
 
         if(controller.isRightDoorOpen())
-            draw("rightDoorOpen", 1539, 617);
+            draw("Door/RightDoorOpen", 1470, 587);
         else
-            draw("rightDoorClosed", 1355, 647);
+            draw("Door/RightDoorClosed", 1310, 658);
     }
 
-    private void draw(String textureName, int x, int y) {
-        Texture textureToDraw = atlas.getTexture(textureName);
-        batch.draw(textureToDraw, x, 1080 - y - textureToDraw.getHeight());
+    private void draw(String spriteName, int x, int y) {
+        Sprite spriteToDraw = atlas.getSprite(spriteName);
+        if (spriteToDraw == null)
+            return;
+        batch.draw(spriteToDraw, x, 1080 - y - spriteToDraw.getHeight());
     }
 
-    private void checkLightning(Vector<DisplayFragment> array, boolean[] positions) {
+    private void updateLightning(Vector<DisplayFragment> array, boolean[] positions) {
         for(int i = 0; i < positions.length; i++)
             if(positions[i])
                 array.elementAt(i).turnOn();

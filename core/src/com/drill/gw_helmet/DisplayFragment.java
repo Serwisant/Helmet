@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class DisplayFragment {
-    private Texture texture;
+    private Sprite sprite;
     private int x;
     private int y;
     private float alpha;
@@ -24,8 +24,8 @@ public class DisplayFragment {
         turnOffAlpha = 0.1f;
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     public void setLocation(int x, int y) {
@@ -62,12 +62,11 @@ public class DisplayFragment {
     }
 
     public void draw(SpriteBatch batch) {
-        if(texture == null)
+        if(sprite == null)
             return;
 
-        Sprite sprite = new Sprite(texture);
         sprite.setAlpha(alpha);
-        sprite.setPosition(x, 1080 - texture.getHeight() - y);
+        sprite.setPosition(x, 1080 - sprite.getHeight() - y);
         sprite.draw(batch);
     }
 }

@@ -1,7 +1,7 @@
 package com.drill.gw_helmet;
 
 public class Lane {
-    protected boolean[] positionTable;
+    private boolean[] positionTable;
 
     public Lane(int lenght) {
         positionTable = new boolean[lenght];
@@ -37,5 +37,9 @@ public class Lane {
 
     public boolean isTurnedOff(int pos) {
         return !isTurnedOn(pos);
+    }
+
+    public boolean[] getPositionTable() {
+        return positionTable;
     }
 }

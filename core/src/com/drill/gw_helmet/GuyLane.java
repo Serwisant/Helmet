@@ -50,7 +50,7 @@ public class GuyLane extends Lane {
     }
 
     public void hit() {
-        positionTable[currentPosition] = false;
+        turnOff(currentPosition);
         currentPosition = -1;
     }
 }

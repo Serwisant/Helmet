@@ -32,21 +32,24 @@ public class ObstacleLane extends Lane {
     }
 
     public void moveDown() {
-        if(isTurnedOn(positionTable.length - 1))
+        if(isTurnedOn(getPositionTable().length - 1))
             justFell = true;
         else
             justFell = false;
 
-        for(int i = positionTable.length - 1; i > 0; i--) {
-            positionTable[i] = positionTable[i-1];
+        for(int i = getPositionTable().length - 1; i > 0; i--) {
+            if(isTurnedOn(i - 1))
+                turnOn(i);
+            else
+                turnOff(i);
         }
 
         if(shouldAdd && isTurnedOff(0)) {
-            positionTable[0] = true;
+            turnOn(0);
             shouldAdd = false;
         }
         else
-            positionTable[0] = false;
+            turnOff(0);
     }
 
     public void pause() {
