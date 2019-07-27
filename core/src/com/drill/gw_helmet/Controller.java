@@ -151,7 +151,6 @@ public class Controller {
         if(getGuyPosition() > 0 && getGuyPosition() < 6) {
             ObstacleLane laneOverGuy = obstacleContainer.get(getGuyPosition() - 1);
             if (canLaneHurt(laneOverGuy)) {
-
                 hitGuy();
                 laneOverGuy.turnOff(4);
             }
@@ -200,7 +199,7 @@ public class Controller {
     }
 
     private void generateNewTool() {
-        int addToLane = (int)(Math.random() * 10) % obstacleContainer.size() + 1;
+        int addToLane = (int)(Math.random() * 10) % obstacleContainer.size();
 
         if(addToLane >= obstacleContainer.size())
             return;

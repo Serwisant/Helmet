@@ -25,7 +25,7 @@ public class GuyLane extends Lane {
 
         turnOff(currentPosition);
 
-        if(currentPosition > 1 && currentPosition < 5)
+        if(currentPosition > 1 && currentPosition < 6)
             currentPosition--;
 
         turnOn(currentPosition);
