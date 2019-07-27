@@ -31,44 +31,67 @@ public class Controller {
     }
 
     public void reset() {
+        createObstacleLanes();
+        createAndFillObstacleLaneContainer();
+        createDoor();
+        prepareGuyLane();
+        prepareGuyTimer();
+        prepareToolTimer();
+        prepareAllObstacleLanes();
+        resetScoreMissesAndDeltaTime();
+    }
+
+    private void resetScoreMissesAndDeltaTime() {
+        score = 0;
+        partialScore = 0;
         misses = 0;
+        deltaTime = 0;
+    }
 
-        obstacleContainer = new Vector<ObstacleLane>();
-
+    private void createObstacleLanes() {
         hammerLane = new ObstacleLane();
         bucketLane = new ObstacleLane();
         keyLane = new ObstacleLane();
         screwLane = new ObstacleLane();
         wrenchLane = new ObstacleLane();
+    }
+
+    private void createAndFillObstacleLaneContainer() {
+        obstacleContainer = new Vector<ObstacleLane>();
 
         obstacleContainer.add(hammerLane);
         obstacleContainer.add(bucketLane);
         obstacleContainer.add(keyLane);
         obstacleContainer.add(screwLane);
         obstacleContainer.add(wrenchLane);
+    }
 
+    private void createDoor() {
         door = new Door();
+    }
 
+    private void prepareGuyLane() {
         guyLane = new GuyLane();
         guyLane.setDoor(door);
+    }
 
+    private void prepareGuyTimer() {
         guyTimer = new Timer();
         guyTimer.setTimer(0.5f);
         guyTimer.reset();
+    }
 
+    private void prepareToolTimer() {
         toolTimer = new Timer();
         toolTimer.setTimer(LANE_TIMER);
+    }
 
+    private void prepareAllObstacleLanes() {
         prepareLane(hammerLane, 0.f);
         prepareLane(bucketLane, 0.2f);
         prepareLane(keyLane, 0.4f);
         prepareLane(screwLane, 0.6f);
         prepareLane(wrenchLane, 0.8f);
-
-        score = 0;
-        partialScore = 0;
-        misses = 0;
-        deltaTime = 0;
     }
 
     private void prepareLane(ObstacleLane lane, float delay) {
@@ -98,7 +121,7 @@ public class Controller {
     }
 
     private void checkAndHandleDoor() {
-        if(getGuyPosition() == 6) {
+        if(isGuyAtRightDoor()) {
             if (guyTimer.ticked(deltaTime)) {
                 guyLane.reset();
                 door.resume();
@@ -110,13 +133,17 @@ public class Controller {
         }
     }
 
+    private boolean isGuyAtRightDoor() {
+        return getGuyPosition() == 6;
+    }
+
     private void updateObstacles() {
         for(ObstacleLane i : obstacleContainer)
             i.update(deltaTime);
     }
 
     private void countScore() {
-        if(guyLane.getPosition() == 0)
+        if(isGuyAtLeftDoor())
             return;
         
         for(ObstacleLane i : obstacleContainer)
@@ -129,6 +156,10 @@ public class Controller {
 
         if(score >= 999)
             score = 999;
+    }
+
+    private boolean isGuyAtLeftDoor() {
+        return guyLane.getPosition() == 0;
     }
 
     private void increaseSpeedIfNeeded() {
@@ -145,16 +176,22 @@ public class Controller {
 
         for(ObstacleLane i : obstacleContainer)
             i.setTimerWithoutReset(speed);
+
+        toolTimer.changeTimerWithoutReset(speed);
     }
 
     private void handleCollision() {
-        if(getGuyPosition() > 0 && getGuyPosition() < 6) {
+        if(isGuyInField()) {
             ObstacleLane laneOverGuy = obstacleContainer.get(getGuyPosition() - 1);
             if (canLaneHurt(laneOverGuy)) {
                 hitGuy();
                 laneOverGuy.turnOff(4);
             }
         }
+    }
+
+    private boolean isGuyInField() {
+        return getGuyPosition() > 0 && getGuyPosition() < 6;
     }
 
     private void checkForToolGenerator() {
@@ -167,9 +204,9 @@ public class Controller {
     }
 
     private void handleFallenGuy() {
-        if(guyLane.getPosition() == -1) {
+        if(isGuyFallen()) {
             if(guyTimer.ticked(deltaTime)) {
-                if(misses >= 4)
+                if(isTooMuchMisses())
                     reset();
 
                 guyLane.reset();
@@ -186,6 +223,14 @@ public class Controller {
                     i.pause();
             }
         }
+    }
+
+    private boolean isTooMuchMisses() {
+        return misses >= 4;
+    }
+
+    private boolean isGuyFallen() {
+        return guyLane.getPosition() == -1;
     }
 
     private boolean canLaneHurt(ObstacleLane lane) {

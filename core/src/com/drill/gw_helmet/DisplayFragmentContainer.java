@@ -69,7 +69,16 @@ public class DisplayFragmentContainer {
     }
 
     public void fillContainers() {
+        prepareGuyFragments();
+        prepareHammerFragments();
+        prepareBucketFragments();
+        prepareKeyFragments();
+        prepareScrewFragments();
+        prepareWrenchFragments();
+        prepareGUIFragments();
+    }
 
+    private void prepareGuyFragments() {
         fallenGuy = new DisplayFragment();
         fallenGuy.setLocation(655, 848);
         fallenGuy.setSprite(atlas.getSprite("HelmetGuy/FallenGuy"));
@@ -108,7 +117,9 @@ public class DisplayFragmentContainer {
         guy7.setLocation(1338, 686);
         guy7.setSprite(atlas.getSprite("HelmetGuy/HelmetGuy7"));
         guyFragments.add(guy7);
+    }
 
+    private void prepareHammerFragments() {
         DisplayFragment hammer1 = new DisplayFragment();
         hammer1.setLocation(366, 244);
         hammer1.setSprite(atlas.getSprite("Hammer/Hammer1"));
@@ -133,8 +144,9 @@ public class DisplayFragmentContainer {
         hammer5.setLocation(368, 541);
         hammer5.setSprite(atlas.getSprite("Hammer/Hammer5"));
         hammerFragments.add(hammer5);
+    }
 
-
+    private void prepareBucketFragments() {
         DisplayFragment bucket1 = new DisplayFragment();
         bucket1.setLocation(528, 227);
         bucket1.setSprite(atlas.getSprite("Bucket/Bucket1"));
@@ -160,7 +172,9 @@ public class DisplayFragmentContainer {
         bucket5.setSprite(atlas.getSprite("Bucket/Bucket5"));
         bucketFragments.add(bucket5);
 
+    }
 
+    private void prepareKeyFragments() {
         DisplayFragment key1 = new DisplayFragment();
         key1.setLocation(713, 249);
         key1.setSprite(atlas.getSprite("Key/Key1"));
@@ -185,8 +199,9 @@ public class DisplayFragmentContainer {
         key5.setLocation(715, 558);
         key5.setSprite(atlas.getSprite("Key/Key5"));
         keyFragments.add(key5);
+    }
 
-
+    private void prepareScrewFragments() {
         DisplayFragment screw1 = new DisplayFragment();
         screw1.setLocation(889, 264);
         screw1.setSprite(atlas.getSprite("Screw/Screw1"));
@@ -211,8 +226,9 @@ public class DisplayFragmentContainer {
         screw5.setLocation(922, 546);
         screw5.setSprite(atlas.getSprite("Screw/Screw5"));
         screwFragments.add(screw5);
+    }
 
-
+    private void prepareWrenchFragments() {
         DisplayFragment wrench1 = new DisplayFragment();
         wrench1.setLocation(1104, 242);
         wrench1.setSprite(atlas.getSprite("Wrench/Wrench1"));
@@ -237,8 +253,9 @@ public class DisplayFragmentContainer {
         wrench5.setLocation(1109, 592);
         wrench5.setSprite(atlas.getSprite("Wrench/Wrench5"));
         wrenchFragments.add(wrench5);
+    }
 
-
+    private void prepareGUIFragments() {
         DisplayFragment miss1 = new DisplayFragment();
         miss1.setLocation(882, 58);
         missFragments.add(miss1);

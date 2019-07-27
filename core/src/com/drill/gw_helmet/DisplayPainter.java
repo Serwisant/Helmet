@@ -1,6 +1,5 @@
 package com.drill.gw_helmet;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -38,7 +37,7 @@ public class DisplayPainter {
         batch.begin();
 
         drawScenery();
-        drawLanes();
+        updateAndDrawLanes();
         drawDoor();
         drawMisses();
         drawPoints();
@@ -52,7 +51,7 @@ public class DisplayPainter {
         draw("Scenery/Ground", 180, 843);
     }
 
-    private void drawLanes() {
+    private void updateAndDrawLanes() {
         updateAndDisplayLaneFragment(dfc.getGuyFragments(), controller.getGuyLane().getPositionTable());
 
         updateAndDisplayLaneFragment(dfc.getHammerFragments(), controller.getHammerLane().getPositionTable());
@@ -61,6 +60,10 @@ public class DisplayPainter {
         updateAndDisplayLaneFragment(dfc.getScrewFragments(), controller.getScrewLane().getPositionTable());
         updateAndDisplayLaneFragment(dfc.getWrenchFragments(), controller.getWrenchLane().getPositionTable());
 
+        drawFallenGuyIfNeeded();
+    }
+
+    private void drawFallenGuyIfNeeded() {
         dfc.getFallenGuyFragment().update(dt);
         if(controller.getGuyPosition() == -1)
             dfc.getFallenGuyFragment().turnOn();
@@ -70,37 +73,62 @@ public class DisplayPainter {
     }
 
     private void drawMisses() {
+        updateMissFragments();
+        showMissTextIfNeeded();
+        drawMissIcons();
+    }
+
+    private void updateMissFragments() {
         for(DisplayFragment i : dfc.getMissFragments())
             i.update(dt);
+    }
 
+    private void showMissTextIfNeeded() {
         if(controller.getMisses() > 0)
             dfc.getMissFragments().elementAt(3).turnOn();
         else
             dfc.getMissFragments().elementAt(3).turnOff();
+    }
 
+    private void drawZeroMisses() {
+        dfc.getMissFragments().elementAt(0).turnOff();
+        dfc.getMissFragments().elementAt(1).turnOff();
+        dfc.getMissFragments().elementAt(2).turnOff();
+    }
+
+    private void drawOneMiss() {
+        dfc.getMissFragments().elementAt(0).turnOn();
+        dfc.getMissFragments().elementAt(1).turnOff();
+        dfc.getMissFragments().elementAt(2).turnOff();
+    }
+
+    private void drawTwoMisses() {
+        dfc.getMissFragments().elementAt(0).turnOn();
+        dfc.getMissFragments().elementAt(1).turnOn();
+        dfc.getMissFragments().elementAt(2).turnOff();
+    }
+
+    private void drawThreeMisses() {
+        dfc.getMissFragments().elementAt(0).turnOn();
+        dfc.getMissFragments().elementAt(1).turnOn();
+        dfc.getMissFragments().elementAt(2).turnOn();
+    }
+
+    private void drawMissIcons() {
         switch(controller.getMisses()) {
             case 0:
-                dfc.getMissFragments().elementAt(0).turnOff();
-                dfc.getMissFragments().elementAt(1).turnOff();
-                dfc.getMissFragments().elementAt(2).turnOff();
+                drawZeroMisses();
                 break;
             case 1:
-                dfc.getMissFragments().elementAt(0).turnOn();
-                dfc.getMissFragments().elementAt(1).turnOff();
-                dfc.getMissFragments().elementAt(2).turnOff();
+                drawOneMiss();
                 break;
             case 2:
-                dfc.getMissFragments().elementAt(0).turnOn();
-                dfc.getMissFragments().elementAt(1).turnOn();
-                dfc.getMissFragments().elementAt(2).turnOff();
+                drawTwoMisses();
                 break;
             case 3:
-                dfc.getMissFragments().elementAt(0).turnOn();
-                dfc.getMissFragments().elementAt(1).turnOn();
-                dfc.getMissFragments().elementAt(2).turnOn();
+                drawThreeMisses();
                 break;
         }
-
 
         for(DisplayFragment i : dfc.getMissFragments())
             i.draw(batch);

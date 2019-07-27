@@ -1,6 +1,5 @@
 package com.drill.gw_helmet;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -33,24 +32,12 @@ public class DisplayFragment {
         this.y = y;
     }
 
-    public void setTurnedOffAlpha(float alpha) {
-        turnOffAlpha = alpha;
-    }
-
     public void turnOn() {
         turnedOn = true;
     }
 
     public void turnOff() {
         turnedOn = false;
-    }
-
-    public void setTurnOnTime(float seconds) {
-        turnOnTime = seconds;
-    }
-
-    public void setTurnOffTime(float seconds) {
-        turnOffTime = seconds;
     }
 
     public void update(float deltaTime) {
