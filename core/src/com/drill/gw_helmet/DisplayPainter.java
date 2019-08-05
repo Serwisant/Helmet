@@ -186,10 +186,20 @@ public class DisplayPainter {
     private void drawDoor() {
         draw("Scenery/LeftDoor", 46, 616);
 
-        if(controller.isRightDoorOpen())    // TODO: Alpha
-            draw("Door/RightDoorOpen", 1470, 587);
-        else
-            draw("Door/RightDoorClosed", 1310, 658);
+        if(controller.isRightDoorOpen()) {
+            dfc.getDoorOpenFragment().turnOn();
+            dfc.getDoorClosedFragment().turnOff();
+        }
+        else {
+            dfc.getDoorOpenFragment().turnOff();
+            dfc.getDoorClosedFragment().turnOn();
+        }
+
+        dfc.getDoorOpenFragment().update(dt);
+        dfc.getDoorOpenFragment().draw(batch);
+
+        dfc.getDoorClosedFragment().update(dt);
+        dfc.getDoorClosedFragment().draw(batch);
     }
 
     private void draw(String spriteName, int x, int y) {

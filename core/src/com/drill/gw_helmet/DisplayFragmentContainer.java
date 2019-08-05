@@ -6,6 +6,8 @@ public class DisplayFragmentContainer {
     private TextureAtlasWrapper atlas;
 
     private DisplayFragment fallenGuy;
+    private DisplayFragment doorOpenFragment;
+    private DisplayFragment doorClosedFragment;
 
     private Vector<DisplayFragment> guyFragments;
 
@@ -30,6 +32,14 @@ public class DisplayFragmentContainer {
 
     public DisplayFragment getFallenGuyFragment() {
         return fallenGuy;
+    }
+
+    public DisplayFragment getDoorOpenFragment() {
+        return doorOpenFragment;
+    }
+
+    public DisplayFragment getDoorClosedFragment() {
+        return doorClosedFragment;
     }
 
     public Vector<DisplayFragment> getHammerFragments() {
@@ -76,6 +86,7 @@ public class DisplayFragmentContainer {
         prepareScrewFragments();
         prepareWrenchFragments();
         prepareGUIFragments();
+        prepareDoorFragments();
     }
 
     private void prepareGuyFragments() {
@@ -312,8 +323,18 @@ public class DisplayFragmentContainer {
         missFragments.add(missText);
     }
 
+    private void prepareDoorFragments() {
+        doorOpenFragment.setLocation(1470, 587);
+        doorOpenFragment.setSprite(atlas.getSprite("Door/RightDoorOpen"));
+
+        doorClosedFragment.setLocation(1310, 658);
+        doorClosedFragment.setSprite(atlas.getSprite("Door/RightDoorClosed"));
+    }
+
     private void initializeContainers() {
         fallenGuy = new DisplayFragment();
+        doorOpenFragment = new DisplayFragment();
+        doorClosedFragment = new DisplayFragment();
 
         guyFragments = new Vector<DisplayFragment>();
 
