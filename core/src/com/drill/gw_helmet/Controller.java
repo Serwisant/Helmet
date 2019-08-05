@@ -180,8 +180,14 @@ public class Controller {
     }
 
     private void updateLanesSpeed() {
-        for(ObstacleLane i : obstacleContainer)
+        int laneNumber = 0;
+        for(ObstacleLane i : obstacleContainer) {
+            float laneFactor = laneNumber / obstacleContainer.size();
+            float laneDelay = laneFactor * lane_timer;
+            i.setTimerDelay(laneDelay);
             i.setTimerWithoutReset(lane_timer);
+            laneNumber++;
+        }
     }
 
     private void updateToolGenerationTimer() {
