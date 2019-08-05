@@ -3,7 +3,7 @@ package com.drill.gw_helmet;
 import java.util.Vector;
 
 public class Controller {
-    private static float LANE_TIMER = 1.f;
+    private float lane_timer = 1.f;
 
     private Vector<ObstacleLane> obstacleContainer;
 
@@ -22,7 +22,7 @@ public class Controller {
     private int partialScore;
     private int misses;
 
-    private Timer toolTimer;
+    private Timer toolGeneratorTimer;
 
     private float deltaTime;
 
@@ -82,8 +82,8 @@ public class Controller {
     }
 
     private void prepareToolTimer() {
-        toolTimer = new Timer();
-        toolTimer.setTimer(LANE_TIMER);
+        toolGeneratorTimer = new Timer();
+        toolGeneratorTimer.setTimer(lane_timer);
     }
 
     private void prepareAllObstacleLanes() {
@@ -96,7 +96,7 @@ public class Controller {
 
     private void prepareLane(ObstacleLane lane, float delay) {
         lane.setTimerDelay(delay);
-        lane.setTimer(LANE_TIMER);
+        lane.setTimer(lane_timer);
     }
 
     public void moveGuyLeft() {
@@ -163,7 +163,7 @@ public class Controller {
     }
 
     private void increaseSpeedIfNeeded() {
-        float speed;
+        float speed = lane_timer;
 
         if(score >= 500)
             speed = 0.3f;
@@ -171,13 +171,21 @@ public class Controller {
             speed = 0.7f;
         else if(score >= 50)
             speed = 0.9f;
-        else
-            speed = 1.f;
 
+        if(speed != lane_timer) {
+            lane_timer = speed;
+            updateLanesSpeed();
+            updateToolGenerationTimer();
+        }
+    }
+
+    private void updateLanesSpeed() {
         for(ObstacleLane i : obstacleContainer)
-            i.setTimerWithoutReset(speed);
+            i.setTimerWithoutReset(lane_timer);
+    }
 
-        toolTimer.changeTimerWithoutReset(speed);
+    private void updateToolGenerationTimer() {
+        toolGeneratorTimer.setTimer(lane_timer);
     }
 
     private void handleCollision() {
@@ -195,7 +203,7 @@ public class Controller {
     }
 
     private void checkForToolGenerator() {
-        if(toolTimer.ticked(deltaTime))
+        if(toolGeneratorTimer.ticked(deltaTime))
             generateNewTool();
     }
 
@@ -251,7 +259,7 @@ public class Controller {
 
         obstacleContainer.elementAt(addToLane).add();
 
-        toolTimer.reset();
+        toolGeneratorTimer.reset();
     }
 
     public ObstacleLane getHammerLane() {
