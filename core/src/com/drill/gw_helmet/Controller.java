@@ -3,7 +3,7 @@ package com.drill.gw_helmet;
 import java.util.Vector;
 
 public class Controller {
-    private float lane_timer = 1.f;
+    private float laneTimer = 1.f;
 
     private Vector<ObstacleLane> obstacleContainer;
 
@@ -83,7 +83,7 @@ public class Controller {
 
     private void prepareToolTimer() {
         toolGeneratorTimer = new Timer();
-        toolGeneratorTimer.setTimer(lane_timer);
+        toolGeneratorTimer.setTimer(laneTimer);
     }
 
     private void prepareAllObstacleLanes() {
@@ -96,7 +96,7 @@ public class Controller {
 
     private void prepareLane(ObstacleLane lane, float delay) {
         lane.setTimerDelay(delay);
-        lane.setTimer(lane_timer);
+        lane.setTimer(laneTimer);
     }
 
     public void moveGuyLeft() {
@@ -163,7 +163,7 @@ public class Controller {
     }
 
     private void increaseSpeedIfNeeded() {
-        float speed = lane_timer;
+        float speed = laneTimer;
 
         if(score >= 500)
             speed = 0.3f;
@@ -172,8 +172,8 @@ public class Controller {
         else if(score >= 50)
             speed = 0.9f;
 
-        if(speed != lane_timer) {
-            lane_timer = speed;
+        if(speed != laneTimer) {
+            laneTimer = speed;
             updateLanesSpeed();
             updateToolGenerationTimer();
         }
@@ -182,16 +182,15 @@ public class Controller {
     private void updateLanesSpeed() {
         int laneNumber = 0;
         for(ObstacleLane i : obstacleContainer) {
-            float laneFactor = laneNumber / obstacleContainer.size();
-            float laneDelay = laneFactor * lane_timer;
+            float laneDelay = laneNumber / obstacleContainer.size() * laneTimer;
             i.setTimerDelay(laneDelay);
-            i.setTimerWithoutReset(lane_timer);
+            i.setTimerWithoutReset(laneTimer);
             laneNumber++;
         }
     }
 
     private void updateToolGenerationTimer() {
-        toolGeneratorTimer.setTimer(lane_timer);
+        toolGeneratorTimer.setTimer(laneTimer);
     }
 
     private void handleCollision() {
